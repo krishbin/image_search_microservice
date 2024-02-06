@@ -1,0 +1,12 @@
+account_type: cifar
+bucket_key: vxvbxbverttrgg
+bucket_secret: jkfdjfdfdkfdjk
+bucket_url: jkfdjfkdj
+database_host: localhost
+database_port: 19530
+database_service: milvus
+milvus_alias: default
+milvus_collection_name: collection
+run_mode: debug
+supported_account_types:
+- aws
