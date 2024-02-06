@@ -8,8 +8,8 @@ preprocess_toPIL = T.ToPILImage()
 class CiFarImageTrainer(ImageTrainer):
     def __init__(self,seeds,account,device,model,preprocess,db):
         super().__init__(seeds,account,device,model,preprocess,db)
-        self.data = self.load_data()
         self.data_length = 100
+        self.data = self.load_data()
         self.embeddings = []
 
     def load_data(self):
@@ -19,7 +19,7 @@ class CiFarImageTrainer(ImageTrainer):
           transform = T.ToTensor()
           )
         images = []
-        for i in range(1000):
+        for i in range(self.data_length):
             images.append(preprocess_toPIL(dataset[i][0]))
         return images
     
@@ -41,11 +41,11 @@ class CiFarImageTrainer(ImageTrainer):
                     {
                         "image_id": i,
                         "image_url": "cifar"+str(i)+".jpg",
-                        "image_embedding": image_features.cpu()
+                        "image_embedding": image_features.cpu().numpy().tolist()[0]
                     }
                 ]
-                print(data)
+                # print(data)
                 # print(dir(self.db))
-                self.db.insert(data)
+                self.db.insert(data=data)
     
 

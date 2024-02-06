@@ -25,11 +25,17 @@ schema = CollectionSchema(
 class MilvusDatabase:
     def __init__(self):
         self.default_collection_name = variables["milvus_collection_name"]
-        self.client = connections.connect(
-            alias=variables["milvus_alias"], 
-            host=variables["database_host"], 
-            port=variables["database_port"]
-        )
+        self.collection = None
+        try:
+            connections.connect(
+                alias=variables["milvus_alias"], 
+                host=variables["database_host"], 
+                port=variables["database_port"]
+            )
+            self.collection = Collection(self.default_collection_name)
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Failed to connect to Milvus")
 
     def setupDatabase(self):
         try:
@@ -49,15 +55,44 @@ class MilvusDatabase:
 
     def insert(self, data: list):
         try:
-            self.client.insert(collection_name=self.default_collection_name, records=data)
+            self.collection.insert(data=data)
         except Exception as e:
             print(f"Error: {e}")
             print("Failed to insert data")
 
-    def search(self, data: list):
-        # Search data
-        pass
+    def search(self, search_params: dict):
+        try:
+            self.collection.load()
+            self.collection.search(
+                data=search_params["query_records"],
+                top_k=search_params["top_k"],
+                anns_field="image_embedding",
+                limit=search_params["limit"],
+                param=search_params["params"],
+            )
+        except Exception as e:
+            print(f"Error: {e}")
+            print("Failed to search data")
+        
 
     def truncate(self):
         # Truncate collection
-        self.client.collection.drop(self.default_collection_name)
+        self.collection.drop(self.default_collection_name)
+
+    def get_all_embeddings(self):
+        num_vectors = self.collection.num_entities
+        all_ids = list(range(num_vectors))
+        search_params = {
+            "query_records": [],
+            "top_k": num_vectors, 
+            "params": {"nprobe": 16},
+            "limit": num_vectors,
+            "anns_field": "image_embedding"
+            }
+        all_embeddings = self.search(search_params)
+        print(all_embeddings)
+        # return (all_ids, all_embeddings)
+
+    def load(self):
+        # Load data
+        self.collection.load()
