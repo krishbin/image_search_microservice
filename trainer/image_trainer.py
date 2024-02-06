@@ -26,10 +26,11 @@ class ImageTrainer:
     def init_seeds(self):
         np.random.seed(self.seeds)
         torch.manual_seed(self.seeds)
-        torch.cuda.manual_seed(self.seeds)
-        torch.cuda.manual_seed_all(self.seeds)
         os.environ['PYTHONHASHSEED'] = str(self.seeds)
-        os.environ['PYTORCH_CUDA_ALLOC_CONF'] = 'max_split_mb:224'
+        if self.device == "cuda":
+            torch.cuda.manual_seed(self.seeds)
+            torch.cuda.manual_seed_all(self.seeds)
+            os.environ['PYTORCH_CUDA_ALLOC_CONF'] = 'max_split_mb:224'
 
     def get_database_info(self):
         print(self.db)
