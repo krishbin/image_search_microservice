@@ -1,7 +1,7 @@
-from account_handler import account
+
 
 class ImageHandler:
-    def __init__(self):
+    def __init__(self,account):
         self.account = account
         self.images = []
     
@@ -9,12 +9,13 @@ class ImageHandler:
         return self.account.get_file_content(rel_image_path)
     
     def list_images(self):
-        file_list = self.account.list_files()
-        for file in file_list:
-            if file.endswith(".jpg") or file.endswith(".png") or file.endswith(".jpeg") or file.endswith(".gif") or file.endswith(".bmp"):
-                self.images.append(file)
-
+        return self.account.list_files()
+       
     def compress_image(self,rel_image_path):
         image = self.get_image_content(rel_image_path)
         image = image.resize((512,512))
         return image
+    
+    def get_image_url(self,rel_image_path):
+        return self.account.get_file_url(rel_image_path)
+    

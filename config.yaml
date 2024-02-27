@@ -1,13 +1,13 @@
 account_type: aws
-bucket_key: fdfdfdsda
-bucket_secret: dasdasd
-bucket_url: dasdas
+bucket_key: "d1h9npeV7580xvVHALX7"
+bucket_secret: "ULLg7Uf9jzIJCztvq5kFpD6DAqOkFKzfiHoUuV0c"
+bucket_url: "https://services-inteliome.yco.com.np:8741"
 database_host: localhost
 database_port: 19530
 database_service: milvus
+device: cpu
 milvus_alias: default
 milvus_collection_name: collection
-device: cpu
 run_mode: debug
 supported_account_types:
 - aws

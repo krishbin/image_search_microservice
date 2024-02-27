@@ -89,8 +89,16 @@ class MilvusDatabase:
             "limit": num_vectors,
             "anns_field": "image_embedding"
             }
-        all_embeddings = self.search(search_params)
-        print(all_embeddings)
+        # all_embeddings = self.search(search_params)
+        all_embeddings =  self.collection.query(
+            expr="",
+            offset = 0,
+            limit = num_vectors, 
+            output_fields = ["image_embedding","image_url"],
+            )
+        return all_embeddings
+
+        # [{'image_embeddings':[],'image_id':int}]
         # return (all_ids, all_embeddings)
 
     def load(self):
