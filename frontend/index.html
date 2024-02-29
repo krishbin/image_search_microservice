@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Search</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Image Search</h1>
+
+        <form id="accountForm">
+            <input type="text" id="bucketUrl" placeholder="Bucket URL">
+            <input type="text" id="bucketKey" placeholder="Bucket Key">
+            <input type="password" id="bucketSecret" placeholder="Bucket Secret">
+            <input type="text" id="bucketName" placeholder="Bucket Name">
+            <button type="button" onclick="setAccountDetails()">Set Account Details</button>
+        </form>
+
+        <!-- <button onclick="refreshEmbeddings()">Refresh Embeddings</button> -->
+
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search Image">
+            <button class="search-button" onclick="searchImage()">Search</button>
+        </div>
+
+        <div id="searchResults"></div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

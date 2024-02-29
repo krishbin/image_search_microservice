@@ -1,0 +1,14 @@
+account_type: aws
+bucket_key: ""
+bucket_name: ""
+bucket_secret: ""
+bucket_url: ""
+database_host: localhost
+database_port: 19530
+database_service: milvus
+device: cpu
+milvus_alias: default
+milvus_collection_name: collection
+run_mode: debug
+supported_account_types:
+- aws
