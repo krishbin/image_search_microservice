@@ -1,8 +1,8 @@
 account_type: aws
-bucket_key: ""
-bucket_name: ""
-bucket_secret: ""
-bucket_url: ""
+bucket_key: m1ejnalbyzjylSnQcr0j
+bucket_name: image_search_bucket
+bucket_secret: DWEXLY6tDF4HHZI9tqob84eenK4s2Tm3TcLArOub
+bucket_url: https://services-inteliome.yco.com.np:8741
 database_host: localhost
 database_port: 19530
 database_service: milvus

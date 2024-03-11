@@ -30,6 +30,7 @@ class ImageSearch:
         }
     
     def get_similarity_result(self,limit:int = 5)->list[ImageResult]:
+        self.db.collection.load()
         results = self.db.collection.search(
             data=self.get_text_embedding(), 
             anns_field="image_embedding", 

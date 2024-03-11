@@ -18,6 +18,7 @@ async function setAccountDetails() {
     });
 
     const result = await response.json();
+    document.getElementById('accountForm').reset();
     alert(result.message);
 }
 

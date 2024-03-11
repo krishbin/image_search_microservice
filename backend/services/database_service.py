@@ -32,7 +32,11 @@ class MilvusDatabase:
                 host=variables["database_host"], 
                 port=variables["database_port"]
             )
+            self.setupDatabase = self.setupDatabase()
             self.collection = Collection(self.default_collection_name)
+            self.create_index()
+            self.collection.load()
+            print("Connected to db")
         except Exception as e:
             print(f"Error: {e}")
             print("Failed to connect to Milvus")
@@ -40,6 +44,7 @@ class MilvusDatabase:
     def setupDatabase(self):
         try:
             self.create_collection(self.default_collection_name)
+            # self.create_index()
         except Exception as e:
             print(f"Error: {e}")
             print("Failed to create collection")
@@ -52,6 +57,20 @@ class MilvusDatabase:
             shard_num=2,
             consistency_level="Strong",
         )
+    
+    def create_index(self):
+        index_params = {
+            "index_type": "AUTOINDEX",
+            "metric_type": "L2",
+            "params": {}
+        }
+
+        self.collection.create_index(
+        field_name="image_embedding",
+        index_params=index_params,
+        index_name=""
+        )
+             
 
     def insert(self, data: list):
         try:

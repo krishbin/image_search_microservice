@@ -7,7 +7,7 @@ from app.image_search import ImageSearch
 from fastapi.middleware.cors import CORSMiddleware
 from services import db 
 from trainer import create_image_trainer
-from account_handler import miniO_s3_bucket
+from account_handler import minio_s3_bucket
 from app.image_handler import ImageHandler
 import clip
 import json
@@ -50,11 +50,15 @@ async def root():
 #only allow admin to access this
 @imagesearch.get("/refresh_embeddings")
 def refresh_embeddings():
-    account = miniO_s3_bucket()
-    image_handler = ImageHandler(account)
-    imgtrainer = create_image_trainer(9222,"aws",image_handler,variables["device"],model,preprocess,db)
-    imgtrainer.train()
-    return {"message": "Refreshed the embeddings"}
+    try:
+        account = minio_s3_bucket()
+        image_handler = ImageHandler(account)
+        imgtrainer = create_image_trainer(9222,"aws",image_handler,variables["device"],model,preprocess,db)
+        imgtrainer.train()
+        return {"message": "Refreshed the embeddings"}
+    except Exception as e:
+        return{'message': e}
+
 
 @imagesearch.post("/set_account_details")
 async def get_account_details(account: GetAccountDetail):

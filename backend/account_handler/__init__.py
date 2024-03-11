@@ -17,11 +17,13 @@ account = None
 # if variables["account_type"] == "aws":
 #     account = amazon_s3_bucket()
 
-def miniO_s3_bucket():
+def minio_s3_bucket():
     return Minio(
         "image-search-bucket",
         variables["bucket_url"],
         variables["bucket_key"],
         variables["bucket_secret"]
     )
+
+# account = minio_s3_bucket()
 
