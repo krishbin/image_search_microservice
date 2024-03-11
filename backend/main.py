@@ -45,7 +45,7 @@ imagesearch.add_middleware(
 
 @imagesearch.get("/")
 async def root():
-    return {"message": "Hello Worl"}
+    return {"message": "Hello World"}
 
 #only allow admin to access this
 @imagesearch.get("/refresh_embeddings")
